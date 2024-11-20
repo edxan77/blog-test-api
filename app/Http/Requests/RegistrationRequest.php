@@ -11,7 +11,7 @@ class RegistrationRequest extends Request
     public function rules(): array
     {
         return [
-            'username' => 'required|string',
+            'fullname' => 'required|string|max:50',
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6|max:100|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
             'password_confirmation' => 'required_with:password|same:password',
@@ -21,8 +21,8 @@ class RegistrationRequest extends Request
     public function messages(): array
     {
         return [
-            'username.required' => self::REQUIRED_MESSAGE,
-            'username.*' => self::INVALID_TYPE_MESSAGE,
+            'fullname.required' => self::REQUIRED_MESSAGE,
+            'fullname.*' => self::INVALID_TYPE_MESSAGE,
             'email.required' => self::REQUIRED_MESSAGE,
             'email.unique' => self::UNIQUE_MESSAGE,
             'email.*' => self::INVALID_TYPE_MESSAGE,

@@ -9,7 +9,6 @@ use App\Repositories\Blog\IBlogRepository;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class BlogController extends Controller
 {

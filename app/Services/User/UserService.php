@@ -2,14 +2,13 @@
 
 namespace App\Services\User;
 
+use App\Models\Auth\Jwt;
 use App\Models\ProfileConfirm;
 use App\Models\User;
 use App\Repositories\User\IProfileConfirmationRepository;
 use App\Repositories\User\IUserRepository;
 use App\Services\BruteForce\BruteForceProtector;
 use App\Services\Mail\IMailService;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +21,7 @@ class UserService implements IUserService
         private IUserRepository                $userRepository,
         private IProfileConfirmationRepository $profileConfirmation,
         private IMailService                   $mailService,
-        private \App\Models\Auth\Jwt            $jwt
+        private Jwt            $jwt
     ){}
 
     public function register(array $data): JsonResponse
@@ -151,16 +150,9 @@ class UserService implements IUserService
         }
     }
 
-    public function getUserByEmail(string $username): ?User
+    public function getUserByEmail(string $email): ?User
     {
-        return User::where('email', $username)->first();
-    }
-
-    public function getUserByJwtToken(string $token): ?User
-    {
-        $username =  JWT::decode($token, new Key(config('auth.jwt.key'), 'HS256'))->username;
-
-        return User::where('username', $username)->first();
+        return User::where('email', $email)->first();
     }
 
     public function getUserById(int $id): ?User
